@@ -1,6 +1,6 @@
 {
   "name": "savepoint",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Node.js REST API for cataloguing and exploring your personal game library. Built for IGME 430 at RIT.",
   "homepage": "https://github.com/CarterIrish/savepoint-api#readme",
   "bugs": {
