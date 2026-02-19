@@ -7,7 +7,8 @@ const jsonHandle = require('./jsonResponses');
 const URL_STRUCT = {
     '/': htmlHandle.GetIndex,
     '/mainStyle.css': htmlHandle.GetCss,
-    '/api/notFound': jsonHandle.NotFound
+    '/api/notFound': jsonHandle.NotFound,
+    '/api/games': jsonHandle.GetGames
 }
 
 const onRequest = (request, response) =>

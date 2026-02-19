@@ -8,4 +8,9 @@ const NotFound = (request, response) => {
     sendResponse(response, 404, { message: "Not Found" }, request.method);
 }
 
-module.exports = { NotFound };
+const GetGames = (request, response, params) =>
+{
+    sendResponse(response, 200, {message: "Here are the games"}, request.method);
+}
+
+module.exports = { NotFound , GetGames };
