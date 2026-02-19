@@ -7,7 +7,8 @@ export default defineConfig([
   { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
   {
     rules:{
-      "no-console":"warn"
+      "no-console":"warn",
+      "no-unused-vars":"warn"
     }
   }
 ]);
