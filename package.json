@@ -1,0 +1,25 @@
+{
+  "name": "savepoint",
+  "version": "1.0.0",
+  "description": "A Node.js REST API for cataloguing and exploring your personal game library. Built for IGME 430 at RIT.",
+  "homepage": "https://github.com/CarterIrish/savepoint-api#readme",
+  "bugs": {
+    "url": "https://github.com/CarterIrish/savepoint-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarterIrish/savepoint-api.git"
+  },
+  "license": "MIT",
+  "author": "Carter Irish",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"All tests completed\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0"
+  }
+}
