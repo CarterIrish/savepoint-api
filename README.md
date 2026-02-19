@@ -33,11 +33,16 @@ SavePoint/
 
 > Full endpoint documentation is available on the `/docs` page of the live application.
 
+### Static Routes
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET/HEAD | `/` | Serves the main client page |
 | GET/HEAD | `/mainStyle.css` | Serves the stylesheet |
-| GET/HEAD | `/notFound` | Returns a 404 JSON response |
+
+### JSON API Routes
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET/HEAD | `/api/notFound` | Returns a 404 JSON response |
 
 _More endpoints will be added as the project develops._
 
