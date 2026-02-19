@@ -13,9 +13,12 @@
   "license": "MIT",
   "author": "Carter Irish",
   "type": "commonjs",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"All tests completed\""
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"All tests completed\"",
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --watch client -e js,html,css --delay 500ms src/server.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
