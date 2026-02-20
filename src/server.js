@@ -16,8 +16,9 @@ const onRequest = (request, response) =>
     console.log(request.url);
     const protocol = request.connection.encrypted ? 'https':'http';
     const parsedURL = new URL(request.url, `${protocol}://${request.headers.host}`);
+
     const handler = URL_STRUCT[parsedURL.pathname] || jsonHandle.NotFound;
-    handler(request, response);
+    handler(request, response, parsedURL.searchParams);
 }
 
 http.createServer(onRequest).listen(port, () => {

@@ -18,6 +18,8 @@ SavePoint/
 ├── client/             # Static files served to the browser
 │   ├── index.html      # Main client-facing page
 │   └── mainStyle.css   # Stylesheet
+├── db/ 
+│   └── games.json      # JSON database served through API
 ├── src/                # Server-side code
 │   ├── server.js       # Entry point, routing
 │   ├── htmlResponses.js# Handlers for static HTML/CSS responses
@@ -43,6 +45,7 @@ SavePoint/
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET/HEAD | `/api/notFound` | Returns a 404 JSON response |
+| GET/HEAD | `/api/games` | Returns summary list of all games | 
 
 _More endpoints will be added as the project develops._
 
