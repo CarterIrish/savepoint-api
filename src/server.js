@@ -6,6 +6,7 @@ const jsonHandle = require('./jsonResponses');
 
 const URL_STRUCT = {
     '/': htmlHandle.GetIndex,
+    '/docs': htmlHandle.GetDocs,
     '/mainStyle.css': htmlHandle.GetCss,
     '/api/notFound': jsonHandle.NotFound,
     '/api/games': jsonHandle.GetGames
