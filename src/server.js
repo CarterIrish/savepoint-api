@@ -3,23 +3,27 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const htmlHandle = require('./htmlResponses');
 const jsonHandle = require('./jsonResponses');
 
-
 const URL_STRUCT = {
-    '/': htmlHandle.GetIndex,
-    '/docs': htmlHandle.GetDocs,
-    '/mainStyle.css': htmlHandle.GetCss,
-    '/api/notFound': jsonHandle.NotFound,
-    '/api/games': jsonHandle.GetGames
+    '/': {GET:htmlHandle.GetIndex},
+    '/docs': {GET:htmlHandle.GetDocs},
+    '/mainStyle.css': {GET:htmlHandle.GetCss},
+    '/api/notFound': {GET:jsonHandle.NotFound},
+    '/api/games': {GET:jsonHandle.GetGames, POST:jsonHandle.AddGames}
 }
 
 const onRequest = (request, response) =>
 {
     console.log(request.url);
+
     const protocol = request.connection.encrypted ? 'https':'http';
     const parsedURL = new URL(request.url, `${protocol}://${request.headers.host}`);
 
-    const handler = URL_STRUCT[parsedURL.pathname] || jsonHandle.NotFound;
-    handler(request, response, parsedURL.searchParams);
+    const methodMap = URL_STRUCT[parsedURL.pathname];
+    if(!methodMap){jsonHandle.NotFound(request, response); return;}
+
+    const method = request.method === 'HEAD' ? 'GET' : request.method;
+    const handler = methodMap[method] || jsonHandle.NotFound;
+    handler(request,response,parsedURL);
 }
 
 http.createServer(onRequest).listen(port, () => {
