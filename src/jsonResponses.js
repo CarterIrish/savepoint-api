@@ -26,28 +26,30 @@ const getGames = (request, response, parsedUrl) => {
 }
 
 const createGame = (request, response, parsedUrl) => {
-    const params = parsedUrl.searchParams;
-    sendResponse(response, 404, { message: 'Work In Progress', params: Object.fromEntries(params) }, request.method);
+    const params = Object.fromEntries(parsedUrl.searchParams);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: createGame', params }, request.method);
 }
 
 const getGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
      const idOrSlug = parts[3];
-    sendResponse(response, 404, { message: 'Work In Progress', idOrSlug }, request.method);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGame', idOrSlug }, request.method);
 }
 
-const getGenres = (request, response) => {
-    sendResponse(response, 404, { message: 'Work in progress' }, request.method);
+const getGenres = (request, response, parsedUrl) => {
+    const params = Object.fromEntries(parsedUrl.searchParams);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGenres', params }, request.method);
 }
 
-const getPlatforms = (request, response) => {
-    sendResponse(response, 404, { message: 'Work in progress' }, request.method);
+const getPlatforms = (request, response, parsedUrl) => {
+    const params = Object.fromEntries(parsedUrl.searchParams);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getPlatforms', params }, request.method);
 }
 
 const updateGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
      const idOrSlug = parts[3];
-    sendResponse(response, 404, { message: 'Work In Progress', idOrSlug }, request.method);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: updateGame', idOrSlug }, request.method);
 }
 
 module.exports = { notFound, getGames, createGame, getGame, getGenres, getPlatforms, updateGame };
