@@ -15,16 +15,20 @@ SavePoint is a web API that allows users to access, search, filter, and manage a
 
 ```
 SavePoint/
-├── client/             # Static files served to the browser
-│   ├── index.html      # Main client-facing page
-│   └── mainStyle.css   # Stylesheet
-├── db/ 
-│   └── games.json      # JSON database served through API
-├── src/                # Server-side code
-│   ├── server.js       # Entry point, routing
-│   ├── htmlResponses.js# Handlers for static HTML/CSS responses
-│   └── jsonResponses.js# Handlers for JSON API responses
-├── eslint.config.js    # ESLint configuration
+├── .github/
+│   └── workflows/
+│       └── node.js.yml     # GitHub Actions CI workflow
+├── client/                 # Static files served to the browser
+│   ├── index.html          # Main client-facing page
+│   ├── docs.html           # API documentation page
+│   └── mainStyle.css       # Stylesheet
+├── db/
+│   └── games.json          # JSON database served through API
+├── src/                    # Server-side code
+│   ├── server.js           # Entry point & routing
+│   ├── htmlResponses.js    # Handlers for static HTML/CSS responses
+│   └── jsonResponses.js    # Handlers for JSON API responses
+├── eslint.config.mjs       # ESLint configuration
 ├── package.json
 └── README.md
 ```
@@ -39,15 +43,19 @@ SavePoint/
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET/HEAD | `/` | Serves the main client page |
+| GET/HEAD | `/docs` | Serves the API documentation page |
 | GET/HEAD | `/mainStyle.css` | Serves the stylesheet |
 
 ### JSON API Routes
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET/HEAD | `/api/games` | Returns summary list of all games |
+| GET/HEAD | `/api/games/:idOrSlug` | Returns a single game by ID or slug |
+| POST | `/api/games` | Creates a new game entry |
+| POST | `/api/games/:idOrSlug` | Updates an existing game |
+| GET/HEAD | `/api/genres` | Returns all genres |
+| GET/HEAD | `/api/platforms` | Returns all platforms |
 | GET/HEAD | `/api/notFound` | Returns a 404 JSON response |
-| GET/HEAD | `/api/games` | Returns summary list of all games | 
-
-_More endpoints will be added as the project develops._
 
 ---
 
@@ -58,14 +66,15 @@ _More endpoints will be added as the project develops._
 - [x] 404 response for invalid URLs
 - [x] `Content-Type` header set on all responses
 - [x] HEAD request support
+- [x] Method-based routing with dynamic URL parameters
+- [x] GitHub Actions CI
 - [ ] 4+ GET endpoints with query parameter support _(in progress)_
 - [ ] 2+ POST endpoints (JSON and x-www-form-urlencoded) _(in progress)_
 - [ ] Status codes: 200, 201, 204, 400, 404 _(in progress)_
 - [ ] `Content-Length` header on all responses _(in progress)_
 - [ ] Client page using `fetch()` with Accept headers _(in progress)_
 - [ ] API documentation page _(in progress)_
-- [ ] GitHub Actions CI _(in progress)_
-- [ ] Deployed to Heroku _(in progress)_
+- [x] Deployed to Heroku _(in progress)_
 
 ---
 
