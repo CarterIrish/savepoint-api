@@ -1,4 +1,4 @@
-const database = require('../db/games.json');
+const store = require('../db/store.js');
 
 const sendResponse = (res, status, obj, method) => {
     const body = JSON.stringify(obj);
@@ -11,13 +11,13 @@ const sendResponse = (res, status, obj, method) => {
 }
 
 const notFound = (request, response) => {
-    sendResponse(response, 404, { message: "The endpoint you are looking for was not found", id:'notFound' }, request.method);
+    sendResponse(response, 404, { message: "The endpoint you are looking for was not found", id: 'notFound' }, request.method);
 }
 
 const getGames = (request, response, parsedUrl) => {
     const params = parsedUrl.searchParams;
 
-    let games = database.games.map(({
+    let games = store.getAll().map(({
         id, name, slug, url, cover, genres, platforms, rating, rating_count, first_release_date
     }) => ({
         id, name, slug, url, cover, genres, platforms, rating, rating_count, first_release_date
@@ -32,7 +32,7 @@ const createGame = (request, response, parsedUrl) => {
 
 const getGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
-     const idOrSlug = parts[3];
+    const idOrSlug = parts[3];
     sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGame', idOrSlug }, request.method);
 }
 
@@ -48,7 +48,7 @@ const getPlatforms = (request, response, parsedUrl) => {
 
 const updateGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
-     const idOrSlug = parts[3];
+    const idOrSlug = parts[3];
     sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: updateGame', idOrSlug }, request.method);
 }
 
