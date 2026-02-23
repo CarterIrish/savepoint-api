@@ -1,4 +1,5 @@
 const database = require('../db/games.json');
+const {styleText} = require('node:util');
 let games = database.games;
 
 let mapBySlug = new Map(games.map(g => [g.slug, g]));
@@ -9,7 +10,7 @@ const getAll = () => {
 }
 
 const getById = (id) => {
-    return mapById.get(id);
+    return mapById.get(Number(id));
 }
 
 const getBySlug = (slug) => {

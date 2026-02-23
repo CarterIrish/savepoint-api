@@ -33,7 +33,16 @@ const createGame = (request, response, parsedUrl) => {
 const getGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
     const idOrSlug = parts[3];
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGame', idOrSlug }, request.method);
+    let result;
+    if(isNaN(idOrSlug))
+    {
+        result = store.getBySlug(idOrSlug);
+    }
+    else{
+        result = store.getById(idOrSlug);
+    }
+    console.log(result);
+    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGame', idOrSlug, result }, request.method);
 }
 
 const getGenres = (request, response, parsedUrl) => {
