@@ -14,10 +14,14 @@ const URL_STRUCT = {
 }
 
 const onRequest = (request, response) => {
-    console.log(`${styleText('cyan', request.method)} ${request.url}`);
-
+     
+    const method = request.method === 'HEAD' ? 'GET' : request.method;
     const protocol = request.connection.encrypted ? 'https' : 'http';
     const parsedURL = new URL(request.url, `${protocol}://${request.headers.host}`);
+
+    // TODO: Remove these 2 lines when project complete
+    const consoleColor = (method === 'GET' || method === 'HEAD') ? 'green' : 'yellow';
+    console.log(`${styleText(consoleColor, method)} ${request.url}`);
 
     let methodMap = URL_STRUCT[parsedURL.pathname];
     // No exact match means either 404 or dynamic endpoint ':idOrSlug'
@@ -32,7 +36,6 @@ const onRequest = (request, response) => {
         }
     }
 
-    const method = request.method === 'HEAD' ? 'GET' : request.method;
     const handler = methodMap[method] || jsonHandle.notFound;
     handler(request, response, parsedURL);
 }

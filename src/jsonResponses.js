@@ -30,19 +30,15 @@ const createGame = (request, response, parsedUrl) => {
     sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: createGame', params }, request.method);
 }
 
+
 const getGame = (request, response, parsedUrl) => {
     const parts = parsedUrl.pathname.split('/');
     const idOrSlug = parts[3];
-    let result;
-    if(isNaN(idOrSlug))
-    {
-        result = store.getBySlug(idOrSlug);
-    }
-    else{
-        result = store.getById(idOrSlug);
-    }
-    console.log(result);
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGame', idOrSlug, result }, request.method);
+    if (!idOrSlug) return sendResponse(response, 400, { message: 'invalid/missing params.', id: 'invalidParams' }, request.method);
+    const result = isNaN(idOrSlug) ? store.getBySlug(idOrSlug) : store.getById(Number(idOrSlug));
+    if (!result) return sendResponse(response, 404, { message: 'Requested resource was not found.', id: 'notFound', params: idOrSlug }, request.method);
+    return sendResponse(response, 200, result, request.method);
+
 }
 
 const getGenres = (request, response, parsedUrl) => {

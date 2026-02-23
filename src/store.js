@@ -1,5 +1,4 @@
 const database = require('../db/games.json');
-const {styleText} = require('node:util');
 let games = database.games;
 
 let mapBySlug = new Map(games.map(g => [g.slug, g]));
