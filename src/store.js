@@ -1,4 +1,4 @@
-const database = require('./games.json');
+const database = require('../db/games.json');
 let games = database.games;
 
 let mapBySlug = new Map(games.map(g => [g.slug, g]));

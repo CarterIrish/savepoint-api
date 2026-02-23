@@ -1,4 +1,4 @@
-const store = require('../db/store.js');
+const store = require('./store.js');
 
 const sendResponse = (res, status, obj, method) => {
     const body = JSON.stringify(obj);
