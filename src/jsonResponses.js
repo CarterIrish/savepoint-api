@@ -14,8 +14,8 @@ const notFound = (request, response) => {
     sendResponse(response, 404, { message: "The endpoint you are looking for was not found", id: 'notFound' }, request.method);
 }
 
-const getGames = (request, response, parsedUrl) => {
-    const params = parsedUrl.searchParams;
+const getGames = (request, response) => {
+    const params = request.query;
 
     let games = store.getAll().map(({
         id, name, slug, url, cover, genres, platforms, rating, rating_count, first_release_date
@@ -25,15 +25,14 @@ const getGames = (request, response, parsedUrl) => {
     sendResponse(response, 200, { games }, request.method);
 }
 
-const createGame = (request, response, parsedUrl) => {
-    const params = Object.fromEntries(parsedUrl.searchParams);
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: createGame', params }, request.method);
+const createGame = (request, response) => {
+    const params = request.query;
+    sendResponse(response, 404, { method: request.method, path: response.path, contentType: request.headers['content-type'], message: 'Work In Progress: createGame', params }, request.method);
 }
 
 
-const getGame = (request, response, parsedUrl) => {
-    const parts = parsedUrl.pathname.split('/');
-    const idOrSlug = parts[3];
+const getGame = (request, response) => {
+    const { idOrSlug } = response.params;
     if (!idOrSlug) return sendResponse(response, 400, { message: 'invalid/missing params.', id: 'invalidParams' }, request.method);
     const result = isNaN(idOrSlug) ? store.getBySlug(idOrSlug) : store.getById(Number(idOrSlug));
     if (!result) return sendResponse(response, 404, { message: 'Requested resource was not found.', id: 'notFound', params: idOrSlug }, request.method);
@@ -41,20 +40,19 @@ const getGame = (request, response, parsedUrl) => {
 
 }
 
-const getGenres = (request, response, parsedUrl) => {
-    const params = Object.fromEntries(parsedUrl.searchParams);
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getGenres', params }, request.method);
+const getGenres = (request, response) => {
+    const params = request.query;
+    sendResponse(response, 404, { method: request.method, path: request.path, message: 'Work In Progress: getGenres', params }, request.method);
 }
 
-const getPlatforms = (request, response, parsedUrl) => {
-    const params = Object.fromEntries(parsedUrl.searchParams);
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, message: 'Work In Progress: getPlatforms', params }, request.method);
+const getPlatforms = (request, response) => {
+    const params = request.query;
+    sendResponse(response, 404, { method: request.method, path: request.path, message: 'Work In Progress: getPlatforms', params }, request.method);
 }
 
-const updateGame = (request, response, parsedUrl) => {
-    const parts = parsedUrl.pathname.split('/');
-    const idOrSlug = parts[3];
-    sendResponse(response, 404, { method: request.method, path: parsedUrl.pathname, contentType: request.headers['content-type'], message: 'Work In Progress: updateGame', idOrSlug }, request.method);
+const updateGame = (request, response) => {
+    const { idOrSlug } = response.params;
+    sendResponse(response, 404, { method: request.method, path: request.path, contentType: request.headers['content-type'], message: 'Work In Progress: updateGame', idOrSlug }, request.method);
 }
 
 module.exports = { notFound, getGames, createGame, getGame, getGenres, getPlatforms, updateGame };

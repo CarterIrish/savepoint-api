@@ -3,6 +3,7 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const htmlHandle = require('./htmlResponses');
 const jsonHandle = require('./jsonResponses');
 const { styleText } = require('node:util');
+const { get } = require('node:http');
 const URL_STRUCT = {
     '/': { GET: htmlHandle.GetIndex },
     '/docs': { GET: htmlHandle.GetDocs },
@@ -19,6 +20,10 @@ const onRequest = (request, response) => {
     const protocol = request.connection.encrypted ? 'https' : 'http';
     const parsedURL = new URL(request.url, `${protocol}://${request.headers.host}`);
 
+    request.query = Object.fromEntries(parsedURL.searchParams);
+    request.path = parsedURL.pathname;
+
+
     // TODO: Remove these 2 lines when project complete
     const consoleColor = (method === 'GET' || method === 'HEAD') ? 'green' : 'yellow';
     console.log(`${styleText(consoleColor, method)} ${request.url}`);
@@ -26,16 +31,18 @@ const onRequest = (request, response) => {
     let methodMap = URL_STRUCT[parsedURL.pathname];
     // No exact match means either 404 or dynamic endpoint ':idOrSlug'
     if (!methodMap) {
-        const parts = parsedURL.pathname.split('/');
-        if (parts.length === 4 && parts[1] === 'api' && parts[2] === 'games' && parts[3]) {
-            methodMap = { GET: jsonHandle.getGame, POST: jsonHandle.updateGame };
+        // This regex is AI generated MUST BE TAGGED IN THE DOCS!!!!!!!!
+        const regexMatch = /^\/api\/games\/(?<idOrSlug>[^/]+)$/.exec(parsedURL.pathname);
+        if(regexMatch)
+        {
+            response.params = {idOrSlug:regexMatch.groups.idOrSlug};
+            methodMap = {GET: jsonHandle.getGame, POST: jsonHandle.updateGame};
         }
-        else {
+        else{
             jsonHandle.notFound(request, response);
             return;
         }
     }
-
     const handler = methodMap[method] || jsonHandle.notFound;
     handler(request, response, parsedURL);
 }
