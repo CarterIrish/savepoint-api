@@ -1,9 +1,10 @@
 const http = require('http');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
+const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1'
 const htmlHandle = require('./htmlResponses');
 const jsonHandle = require('./jsonResponses');
 const { styleText } = require('node:util');
-const { get } = require('node:http');
+
 const URL_STRUCT = {
     '/': { GET: htmlHandle.GetIndex },
     '/docs': { GET: htmlHandle.GetDocs },
@@ -47,7 +48,7 @@ const onRequest = (request, response) => {
     handler(request, response, parsedURL);
 }
 
-http.createServer(onRequest).listen(port, () => {
+http.createServer(onRequest).listen(port, host, () => {
     console.log(`Listening on port: ${port}`);
-    console.log(`preview at: "http://localhost:${port}"`);
+    console.log(`preview at: "http://${host}:${port}"`);
 })
