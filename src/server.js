@@ -27,7 +27,7 @@ const onRequest = (request, response) => {
 
     // TODO: Remove these 2 lines when project complete
     const consoleColor = (method === 'GET' || method === 'HEAD') ? 'green' : 'yellow';
-    console.log(`${styleText(consoleColor, method)} ${request.url}`);
+    console.log(`[${styleText('red',new Date().toLocaleTimeString())}]   ${styleText(consoleColor, method)} ${request.url}`);
 
     let methodMap = URL_STRUCT[parsedURL.pathname];
     // No exact match means either 404 or dynamic endpoint ':idOrSlug'
